@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Visualization and Alerts</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            padding: 20px;
+        }
+
+        .chart-container {
+            flex: 1;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            margin: 10px;
+        }
+
+        .alert {
+            font-weight: bold;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .alert-blue {
+            color: blue;
+        }
+
+        .alert-green {
+            color: green;
+        }
+
+        .alert-yellow {
+            color: yellow;
+        }
+    </style>
+</head>
+<body>
+    <h1>Data Visualization and Alerts</h1>
+
+    <div class="container">
+        <div class="chart-container">
+            <h2>PH Level</h2>
+            <canvas id="barGraph" width="400" height="300"></canvas>
+            <div class="alert alert-blue">Blue Alert: Low values detected</div>
+        </div>
+
+        <div class="chart-container">
+            <h2>Moisture Level</h2>
+            <canvas id="linePlotGraph" width="400" height="300"></canvas>
+            <div class="alert alert-green">Green Alert: Normal values</div>
+        </div>
+
+        <div class="chart-container">
+            <h2>Soil Quality(NPK)</h2>
+            <canvas id="scatterPlot" width="400" height="300"></canvas>
+            <div class="alert alert-yellow">Yellow Alert: High variance in data</div>
+        </div>
+    </div>
+
+    <script>
+        // Sample data for the charts
+        const barData = {
+            labels: ['A', 'B', 'C', 'D', 'E'],
+            datasets: [{
+                label: 'PH Level Data',
+                data: [3, 2, 1, 4, 2],
+                backgroundColor: 'rgba(0, 0, 255, 0.5)',
+                borderColor: 'rgba(0, 0, 255, 1)',
+                borderWidth: 1
+            }]
+        };
+
+        const lineData = {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+            datasets: [{
+                label: 'Moisture Level Data',
+                data: [12, 15, 14, 18, 22, 20],
+                fill: false,
+                borderColor: 'green',
+                borderWidth: 2
+            }]
+        };
+
+        const scatterData = {
+            datasets: [{
+                label: 'NPK Level Data',
+                data: [{ x: 1, y: 2 }, { x: 2, y: 3 }, { x: 3, y: 5 }, { x: 4, y: 7 }, { x: 5, y: 10 }],
+                backgroundColor: 'rgba(255, 165, 0, 0.5)',
+                borderColor: 'rgba(255, 165, 0, 1)',
+                borderWidth: 1
+            }]
+        };
+
+        // Create and render the bar graph
+        const barCtx = document.getElementById('barGraph').getContext('2d');
+        new Chart(barCtx, {
+            type: 'bar',
+            data: barData,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Create and render the line plot graph
+        const lineCtx = document.getElementById('linePlotGraph').getContext('2d');
+        new Chart(lineCtx, {
+            type: 'line',
+            data: lineData,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: false
+                    }
+                }
+            }
+        });
+
+        // Create and render the scatter plot
+        const scatterCtx = document.getElementById('scatterPlot').getContext('2d');
+        new Chart(scatterCtx, {
+            type: 'scatter',
+            data: scatterData,
+            options: {
+                scales: {
+                    x: {
+                        type: 'linear',
+                        position: 'bottom'
+                    },
+                    y: {
+                        type: 'linear',
+                        position: 'left'
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
